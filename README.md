@@ -4,7 +4,7 @@ CareerBot AI is an intelligent career guidance chatbot designed to assist studen
 
 ## Live Demo
 
-🌐 https://dhakshanals.github.io/careerbot-ai/
+🌐 https://dhakshanals.github.io/codeAlpha_career-chatbox-Ai/
 
 ## Features
 
