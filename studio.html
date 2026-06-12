@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Powered Commercial Chatbot Studio</title>
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="mock-site.css">
+</head>
+<body class="theme-aurora">
+
+  <!-- SVG Gradients for inline icons -->
+  <svg width="0" height="0" style="position: absolute;">
+    <defs>
+      <linearGradient id="brand-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#8b5cf6" />
+        <stop offset="100%" stop-color="#06b6d4" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR: Navigation -->
+    <aside class="app-sidebar">
+      <div class="brand-title">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>ChatStudio</span>
+      </div>
+
+      <ul class="nav-menu">
+        <li class="nav-item active" data-tab="brand-tab">
+          <button type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="9" y1="3" x2="9" y2="21"></line>
+            </svg>
+            Brand Editor
+          </button>
+        </li>
+        <li class="nav-item" data-tab="training-tab">
+          <button type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"></path>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
+            Knowledge Base
+          </button>
+        </li>
+        <li class="nav-item" data-tab="analytics-tab">
+          <button type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            Live Analytics
+          </button>
+        </li>
+        <li class="nav-item" data-tab="leads-tab">
+          <button type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            Leads Inbox
+          </button>
+        </li>
+        <li class="nav-item" data-tab="transcripts-tab">
+          <button type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              <line x1="9" y1="10" x2="15" y2="10"></line>
+              <line x1="9" y1="14" x2="15" y2="14"></line>
+            </svg>
+            Transcripts
+          </button>
+        </li>
+        <li class="nav-item" data-tab="export-tab">
+          <button type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            Embed & Export
+          </button>
+        </li>
+      </ul>
+
+      <div class="nav-footer">
+        <p>AI Chatbot v2.0.0 (Cloud)</p>
+      </div>
+    </aside>
+
+    <!-- MIDDLE WORKSPACE: Settings & Controls -->
+    <main class="workspace-panel">
+      
+      <!-- Top Control Bar: Connection Status & Theme Select -->
+      <div class="dashboard-topbar" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 24px; border-bottom: 1px solid var(--border-color); background: rgba(255,255,255,0.01); backdrop-filter: blur(10px); flex-shrink: 0;">
+        <!-- Backend Status Badge -->
+        <div class="backend-status-wrapper" style="display: flex; align-items: center; gap: 8px; font-size: 0.775rem;">
+          <span style="color: var(--text-muted);">Cloud Sync:</span>
+          <span id="backend-status-badge" class="badge-status-local" style="font-weight: 700; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); color: #f59e0b; padding: 2px 8px; border-radius: 20px; display: flex; align-items: center; gap: 4px;">
+            <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #f59e0b;"></span> Checking...
+          </span>
+        </div>
+        
+        <!-- Dashboard Style Theme Switcher -->
+        <div class="theme-select-wrapper" style="display: flex; align-items: center; gap: 8px; font-size: 0.775rem;">
+          <label for="dashboard-theme-select" style="color: var(--text-muted); font-weight: 500;">Console UI Theme:</label>
+          <select id="dashboard-theme-select" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.725rem; outline: none; cursor: pointer;">
+            <option value="aurora">Aurora Glass (Frosted)</option>
+            <option value="light">Vibrant Light (Pastel)</option>
+            <option value="neon">Neon Dream (Glow)</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- 1. BRAND EDITOR PANEL -->
+      <div class="tab-pane active" id="brand-tab">
+        <header class="panel-header">
+          <h2>Chatbot Studio Configurator</h2>
+          <p>Deploy AI across different domains and personalize branding aesthetics.</p>
+        </header>
+        <div class="panel-content">
+          
+          <!-- Domain Preset Loader -->
+          <div class="settings-section">
+            <h3 class="section-title" style="color: var(--accent-cyan);">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              Target Domain Presets
+            </h3>
+            
+            <div class="form-group">
+              <label for="domain-select">Active Domain Framework</label>
+              <select id="domain-select" style="background-color: var(--bg-secondary);">
+                <option value="saas">SaaS / Technology Product</option>
+                <option value="ecommerce">E-Commerce / Retail Store</option>
+                <option value="healthcare">Healthcare / Medical Hub</option>
+                <option value="realestate">Real Estate / Properties Agency</option>
+                <option value="custom">Custom / Blank Canvas</option>
+              </select>
+              <p style="font-size: 0.725rem; color: var(--text-muted); margin-top: 6px;">Changing the domain automatically translates FAQ knowledge base datasets and updates the mock preview site layout below.</p>
+            </div>
+          </div>
+
+          <!-- Basic Info -->
+          <div class="settings-section">
+            <h3 class="section-title">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              Basic Info & Identity
+            </h3>
+            
+            <div class="form-group">
+              <label for="bot-name-input">Chatbot Display Name</label>
+              <input type="text" id="bot-name-input" value="Chat" placeholder="Enter bot display name" />
+            </div>
+
+            <div class="form-group">
+              <label for="bot-avatar-input">Avatar Emoji / Icon</label>
+              <input type="text" id="bot-avatar-input" value="🤖" placeholder="e.g. 🤖, 💬, 🧑‍💻" />
+            </div>
+
+            <div class="form-group">
+              <label for="bot-greeting-input">Initial Greeting Message</label>
+              <textarea id="bot-greeting-input" rows="2" placeholder="Hello there! 👋 How can I help you today?"></textarea>
+            </div>
+          </div>
+
+          <!-- AI Response Engine Configuration -->
+          <div class="settings-section">
+            <h3 class="section-title" style="color: var(--accent-violet);">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+              AI Decision Brain
+            </h3>
+            
+            <div class="form-group">
+              <label for="model-type-select">AI Reply Model Mode</label>
+              <select id="model-type-select" style="background-color: var(--bg-secondary);">
+                <option value="retrieval">Retrieval Matcher (NLP Pattern)</option>
+                <option value="generative">Generative AI Simulation (LLM)</option>
+                <option value="hybrid">Hybrid AI RAG (Retrieval + Generative)</option>
+              </select>
+            </div>
+            
+            <div class="form-group" id="system-prompt-group" style="display: none;">
+              <label for="system-prompt-input">LLM System Prompt / Role Instructions</label>
+              <textarea id="system-prompt-input" rows="2" placeholder="e.g. Act as a sarcastic assistant..."></textarea>
+              <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 4px;">Inject custom persona rules like 'sarcastic', 'excited', 'pirate', or 'formal' to test prompt alignment.</p>
+            </div>
+          </div>
+
+          <!-- Lead Generation Funnel Settings -->
+          <div class="settings-section">
+            <h3 class="section-title" style="color: var(--accent-emerald);">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+              Lead Capture Funnel
+            </h3>
+            
+            <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+              <label for="lead-capture-toggle" style="cursor: pointer; font-weight: 600;">Enable Conversational Lead Capture</label>
+              <input type="checkbox" id="lead-capture-toggle" style="width: 18px; height: 18px; cursor: pointer;" />
+            </div>
+            
+            <div id="lead-capture-settings" style="display: none; border-top: 1px dashed var(--border-color); padding-top: 12px; margin-top: 8px;">
+              <div class="form-group">
+                <label style="margin-bottom: 6px;">Contact Fields to Request</label>
+                <div style="display: flex; gap: 14px;">
+                  <label style="display: flex; align-items: center; gap: 4px; font-size: 0.775rem; color: var(--text-muted);">
+                    <input type="checkbox" id="field-name" checked disabled /> Name (Required)
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 4px; font-size: 0.775rem; color: var(--text-main);">
+                    <input type="checkbox" id="field-email" checked /> Email
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 4px; font-size: 0.775rem; color: var(--text-main);">
+                    <input type="checkbox" id="field-phone" /> Phone Number
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="lead-trigger-count">Prompt user after how many messages?</label>
+                <select id="lead-trigger-count" style="background-color: var(--bg-secondary); padding: 6px 10px;">
+                  <option value="1">1 message</option>
+                  <option value="2" selected>2 messages</option>
+                  <option value="3">3 messages</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Custom Styling, Typography & Theme Gradients -->
+          <div class="settings-section">
+            <h3 class="section-title" style="color: var(--accent-rose);">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+              Aesthetics & Theme Details
+            </h3>
+
+            <div class="form-group">
+              <label for="font-family-select">Widget Typography Font</label>
+              <select id="font-family-select" style="background-color: var(--bg-secondary);">
+                <option value="Inter">Inter (Clean Sans-Serif)</option>
+                <option value="Outfit">Outfit (Futuristic Rounded)</option>
+                <option value="Playfair Display">Playfair Display (Premium Serif)</option>
+                <option value="Fira Code">Fira Code (Developer Code)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; font-size: 0.825rem; margin-bottom: 6px;">
+                <label for="border-radius-slider" style="margin-bottom: 0;">Corner Roundness</label>
+                <span id="border-radius-val" style="font-weight: bold; color: var(--accent-rose);">12px</span>
+              </div>
+              <input type="range" id="border-radius-slider" min="0" max="24" value="12" style="width: 100%; cursor: pointer;" />
+            </div>
+
+            <div class="form-group">
+              <label style="margin-bottom: 6px; display: block;">Header Visual Theme (Gradients)</label>
+              <div class="header-theme-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;">
+                <button type="button" class="btn-header-theme active" data-gradient="linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%)" style="background: linear-gradient(135deg, #8b5cf6, #06b6d4); height: 26px; border-radius: 6px; border: 2px solid #fff; cursor: pointer;"></button>
+                <button type="button" class="btn-header-theme" data-gradient="linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%)" style="background: linear-gradient(135deg, #ff7e5f, #feb47b); height: 26px; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;"></button>
+                <button type="button" class="btn-header-theme" data-gradient="linear-gradient(135deg, #11998e 0%, #38ef7d 100%)" style="background: linear-gradient(135deg, #11998e, #38ef7d); height: 26px; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;"></button>
+                <button type="button" class="btn-header-theme" data-gradient="linear-gradient(135deg, #f857a6 0%, #ff5858 100%)" style="background: linear-gradient(135deg, #f857a6, #ff5858); height: 26px; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;"></button>
+              </div>
+            </div>
+
+            <div class="color-picker-grid" style="margin-top: 12px; margin-bottom: 12px;">
+              <div class="color-input-wrapper">
+                <input type="color" id="primary-color-picker" value="#6366f1" />
+                <span class="color-input-label">Bubble & Main</span>
+              </div>
+              <div class="color-input-wrapper">
+                <input type="color" id="user-bg-picker" value="#4f46e5" />
+                <span class="color-input-label">User Bubble</span>
+              </div>
+            </div>
+            
+            <label style="display: block; font-size: 0.75rem; font-weight: 500; color: var(--text-muted); margin-bottom: 8px;">Quick Color Theme Presets</label>
+            <div class="preset-theme-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;">
+              <button type="button" class="btn-preset" data-primary="#6366f1" data-user="#4f46e5" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 6px; padding: 6px; color: #fff; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background-color 0.2s;">
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #6366f1;"></span> Indigo Classic
+              </button>
+              <button type="button" class="btn-preset" data-primary="#ec4899" data-user="#db2777" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 6px; padding: 6px; color: #fff; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background-color 0.2s;">
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #ec4899;"></span> Sunset Glow
+              </button>
+              <button type="button" class="btn-preset" data-primary="#10b981" data-user="#059669" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 6px; padding: 6px; color: #fff; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background-color 0.2s;">
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #10b981;"></span> Emerald Mint
+              </button>
+              <button type="button" class="btn-preset" data-primary="#a855f7" data-user="#eab308" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 6px; padding: 6px; color: #fff; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background-color 0.2s;">
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #a855f7;"></span> Cyberpunk
+              </button>
+            </div>
+          </div>
+
+          <!-- Position Settings -->
+          <div class="settings-section">
+            <h3 class="section-title">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+              Launcher Placement
+            </h3>
+            
+            <div class="form-group">
+              <label>Screen Placement</label>
+              <div class="alignment-toggle">
+                <button type="button" id="align-left-btn" class="">Bottom Left</button>
+                <button type="button" id="align-right-btn" class="active">Bottom Right</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Quick Reply Suggestions</label>
+              <div style="display: flex; gap: 8px;">
+                <input type="text" id="new-chip-input" placeholder="Add custom query chip..." style="flex-grow: 1;" />
+                <button type="button" id="add-chip-btn" class="btn-primary" style="padding: 0 12px;">+</button>
+              </div>
+              <div class="chips-manager-list" id="chips-manager-container">
+                <!-- Dynamically populated with suggest chips -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2. KNOWLEDGE BASE (TRAINING) PANEL -->
+      <div class="tab-pane" id="training-tab">
+        <header class="panel-header">
+          <h2>Knowledge Base & Training</h2>
+          <p>Define match patterns and triggers. The bot will search inputs and reply based on confidence scores.</p>
+        </header>
+        <div class="panel-content">
+          
+          <div class="form-group">
+            <label style="font-weight: 600; font-size: 0.95rem; margin-bottom: 12px; display: block;">Trained Intent Categories</label>
+            <div class="intent-list" id="intents-container">
+              <!-- Dynamically populated with intent cards -->
+            </div>
+          </div>
+
+          <div class="intent-creator-form">
+            <div class="settings-section">
+              <h3 class="section-title" style="color: var(--accent-violet);">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+                Create New Intent
+              </h3>
+              
+              <div class="form-group">
+                <label for="intent-name">Intent Name</label>
+                <input type="text" id="intent-name" placeholder="e.g., Refund Policy" />
+              </div>
+
+              <div class="form-group">
+                <label for="intent-triggers">Trigger Keyphrases (comma separated)</label>
+                <input type="text" id="intent-triggers" placeholder="e.g., refund, return, return money, cancel plan" />
+              </div>
+
+              <div class="form-group">
+                <label for="intent-response">Bot Response</label>
+                <textarea id="intent-response" rows="3" placeholder="Write response details... supports **bold** style."></textarea>
+              </div>
+
+              <button type="button" id="train-intent-btn" class="btn-primary-glow">
+                Train Chatbot Engine
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 3. LIVE ANALYTICS PANEL -->
+      <div class="tab-pane" id="analytics-tab">
+        <header class="panel-header">
+          <h2>Live Performance Analytics</h2>
+          <p>Monitor simulated client interactions, satisfaction scores, and query triggers in real-time.</p>
+        </header>
+        <div class="panel-content">
+          
+          <div class="analytics-grid">
+            <div class="stat-card">
+              <div class="stat-value" id="stat-total-messages">0</div>
+              <div class="stat-label">Total Messages</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-match-rate">0%</div>
+              <div class="stat-label">Pattern Match Rate</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-avg-confidence">0%</div>
+              <div class="stat-label">Avg match score</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-csat">96%</div>
+              <div class="stat-label">Estimated CSAT</div>
+            </div>
+          </div>
+
+          <div class="settings-section" style="margin-bottom: 20px; text-align: center;">
+            <h3 class="section-title" style="justify-content: center;">🤖 Autopilot Conversation Simulator</h3>
+            <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 12px;">Trigger a random automated user query to test the NLP confidence scoring engine in real-time.</p>
+            <button type="button" id="btn-autopilot-chat" class="btn-primary-glow" style="padding: 8px 16px; font-size: 0.85rem; width: auto;">Run Autopilot Query</button>
+          </div>
+
+          <div class="chart-section">
+            <h3 class="section-title">Trigger Frequencies by Intent</h3>
+            <div class="chart-bars-list" id="analytics-bars-container">
+              <!-- Dynamically populated chart bars -->
+            </div>
+          </div>
+
+          <div class="chart-section" style="margin-top: 20px;">
+            <h3 class="section-title" style="color: var(--accent-cyan);">📋 Real-Time NLP Classifier Log</h3>
+            <div id="nlp-debug-log" style="height: 140px; background-color: #050212; border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; font-family: monospace; font-size: 0.725rem; overflow-y: auto; color: #34d399; display: flex; flex-direction: column; gap: 4px;">
+              <div style="color: #9ca3af;">[System] NLP debug log initialized. Send messages to see classification breakdown...</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 4. LEADS INBOX PANEL -->
+      <div class="tab-pane" id="leads-tab">
+        <header class="panel-header">
+          <h2>Leads Inbox</h2>
+          <p>Review contact details captured conversationally by the chatbot widget.</p>
+        </header>
+        <div class="panel-content">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span style="font-size: 0.825rem; color: var(--text-muted);"><strong id="leads-count" style="color:inherit;">0</strong> leads collected</span>
+            <button type="button" id="export-leads-btn" class="btn-primary" style="padding: 6px 12px; font-size: 0.775rem; width: auto; font-weight: 600;">Export Leads (CSV)</button>
+          </div>
+          
+          <div class="leads-table-wrapper" style="width:100%; overflow-x:auto; border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--bg-surface);">
+            <table id="leads-table" style="width:100%; border-collapse: collapse; text-align: left; font-size: 0.8rem; min-width: 500px;">
+              <thead>
+                <tr style="border-bottom: 1px solid var(--border-color); background-color: rgba(255,255,255,0.02); color: var(--text-muted);">
+                  <th style="padding: 12px 10px;">Name</th>
+                  <th style="padding: 12px 10px;">Email</th>
+                  <th style="padding: 12px 10px;">Phone</th>
+                  <th style="padding: 12px 10px;">Domain Source</th>
+                  <th style="padding: 12px 10px; text-align: right;">Date Captured</th>
+                </tr>
+              </thead>
+              <tbody id="leads-table-body">
+                <tr>
+                  <td colspan="5" style="padding: 24px; text-align: center; color: var(--text-muted);">No leads captured yet. Configure lead capture settings and test the simulator!</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. TRANSCRIPTS PANEL -->
+      <div class="tab-pane" id="transcripts-tab">
+        <header class="panel-header">
+          <h2>Conversation Transcripts</h2>
+          <p>Review and audit complete message exchanges recorded from simulator user queries.</p>
+        </header>
+        <div class="panel-content">
+          <div class="transcripts-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; height: 500px;">
+            <!-- Left Pane: List of Sessions -->
+            <div class="transcripts-sidebar" style="border: 1px solid var(--border-color); border-radius: 8px; background: rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow: hidden;">
+              <div style="padding: 10px 12px; font-size: 0.75rem; font-weight: 600; color: var(--accent-cyan); border-bottom: 1px solid var(--border-color); background: rgba(255,255,255,0.02);">Sessions List</div>
+              <div id="transcripts-list" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding: 8px;">
+                <!-- Dynamically populated with session chips -->
+                <div style="text-align: center; color: var(--text-muted); font-size: 0.75rem; padding-top: 20px;">No chats logged yet.</div>
+              </div>
+            </div>
+            <!-- Right Pane: Active Transcript chat bubble viewer -->
+            <div class="transcript-details" style="border: 1px solid var(--border-color); border-radius: 8px; background: rgba(0,0,0,0.15); display: flex; flex-direction: column; overflow: hidden;">
+              <div style="padding: 10px 12px; font-size: 0.75rem; font-weight: 600; color: var(--accent-violet); border-bottom: 1px solid var(--border-color); background: rgba(255,255,255,0.02); display: flex; justify-content: space-between; align-items: center;">
+                <span>Conversation Viewer</span>
+                <span id="active-session-meta" style="font-size: 0.65rem; color: var(--text-muted);"></span>
+              </div>
+              <div id="transcript-messages-body" style="flex-grow: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px;">
+                <div style="text-align: center; color: var(--text-muted); font-size: 0.75rem; padding-top: 40px;">Select a conversation from the left pane to audit messages.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. EMBED CODE PANEL -->
+      <div class="tab-pane" id="export-tab">
+        <header class="panel-header">
+          <h2>Integrate on Your Website</h2>
+          <p>Copy this lightweight widget loader script and paste it into the footer of any HTML page.</p>
+        </header>
+        <div class="panel-content">
+          
+          <div style="font-size: 0.825rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5;">
+            <p><strong>Instructions:</strong></p>
+            <ol style="margin-left: 18px; margin-top: 6px;">
+              <li>Copy the generated JS snippet below.</li>
+              <li>Paste it before the closing <code>&lt;/body&gt;</code> tag on your target pages.</li>
+              <li>The chatbot will automatically load with your custom branding and pre-trained database.</li>
+            </ol>
+          </div>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-lang">HTML & Javascript</span>
+              <button type="button" id="copy-code-btn" class="btn-copy">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                Copy Code
+              </button>
+            </div>
+            <pre class="code-box" id="embed-code-box">
+<!-- Code dynamic content -->
+            </pre>
+          </div>
+
+          <!-- Cloud Deployment Console -->
+          <div class="settings-section" style="margin-top: 24px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+            <h3 class="section-title" style="color: var(--accent-cyan);">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+              Cloud Deployment Console
+            </h3>
+            <p style="font-size: 0.775rem; color: var(--text-muted); margin-bottom: 14px;">Simulate deployment of this chatbot configuration, system prompt, and database to live cloud servers (AWS CloudFront / GCP AppEngine).</p>
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 12px;">
+              <button type="button" id="btn-cloud-deploy" class="btn-primary-glow" style="width: auto; padding: 6px 14px; font-size: 0.775rem; font-weight: 600;">Deploy to Production</button>
+              <span id="deploy-status-txt" style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">Status: Idle</span>
+            </div>
+            
+            <div id="deploy-terminal" style="height: 120px; background-color: #020108; border: 1px solid var(--border-color); border-radius: 6px; padding: 8px; font-family: monospace; font-size: 0.7rem; overflow-y: auto; color: #a1a1aa; display: flex; flex-direction: column; gap: 3px;">
+              <div style="color: #4b5563;">[System] Cloud Deploy Terminal ready. Click Deploy to trigger build...</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+    <!-- RIGHT PANEL: Live Browser Sandbox Simulator -->
+    <section class="preview-panel">
+      <div class="browser-mockup">
+        
+        <!-- Browser Frame Header -->
+        <div class="browser-topbar">
+          <div class="browser-dots">
+            <div class="browser-dot red"></div>
+            <div class="browser-dot yellow"></div>
+            <div class="browser-dot green"></div>
+          </div>
+          <div class="browser-address">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span id="browser-url-text">https://yourwebsite.com/preview</span>
+          </div>
+        </div>
+
+        <!-- Browser Screen Content viewport -->
+        <div class="browser-content">
+          <div class="preview-sandbox mock-site-body" id="sandbox-wrapper">
+            
+            <!-- Simulated Landing Page -->
+            <div class="site-wrapper" id="site-content-wrapper">
+              
+              <!-- Header -->
+              <header class="site-header">
+                <div class="site-logo">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                  </svg>
+                  <span>SaaSify</span>
+                </div>
+                <nav class="site-nav">
+                  <a href="#features" id="nav-link-1">Features</a>
+                  <a href="#pricing" id="nav-link-2">Pricing</a>
+                  <a href="#contact" id="nav-link-3">Contact</a>
+                </nav>
+              </header>
+
+              <!-- Hero Section -->
+              <section class="site-hero">
+                <h1 id="hero-title">Scale Customer Support in Seconds</h1>
+                <p id="hero-subtitle">Automate your site replies, capture leads, and support users instantly using our intelligent conversational engine.</p>
+                <div class="cta-group" id="hero-cta-group">
+                  <button class="btn-primary" onclick="triggerChatbotQuery('I want to start a free trial')">Start Free Trial</button>
+                  <button class="btn-secondary" onclick="triggerChatbotQuery('I want to book a sales demo')">Book Demo</button>
+                </div>
+              </section>
+
+              <!-- Section 1 -->
+              <h2 id="section-1-title" class="site-section-title">Why SaaSify?</h2>
+              <div class="site-features-grid" id="section-1-grid">
+                <div class="feature-card">
+                  <div class="feature-icon">⚡</div>
+                  <h3>Instant Replies</h3>
+                  <p>Respond to customer questions with zero delay. Perfect for FAQs.</p>
+                </div>
+                <div class="feature-card">
+                  <div class="feature-icon">🎨</div>
+                  <h3>Custom Branding</h3>
+                  <p>Style the colors, logos, and layout to match your brand style guidelines.</p>
+                </div>
+                <div class="feature-card">
+                  <div class="feature-icon">📊</div>
+                  <h3>Engagement Tracking</h3>
+                  <p>See exactly what queries users search for to optimize your knowledge base.</p>
+                </div>
+              </div>
+
+              <!-- Section 2 -->
+              <h2 id="section-2-title" class="site-section-title">Flexible Pricing</h2>
+              <div class="pricing-grid" id="section-2-grid">
+                <div class="price-card">
+                  <h3>Starter</h3>
+                  <div class="price-amount">$19<span>/mo</span></div>
+                  <ul class="price-features">
+                     <li>1 Chatbot Agent</li>
+                     <li>1,000 Chats / mo</li>
+                     <li>Standard Customization</li>
+                  </ul>
+                  <button class="btn-secondary" style="width: 100%;" onclick="triggerChatbotQuery('Tell me more about the Starter plan')">Select Plan</button>
+                </div>
+                <div class="price-card popular">
+                  <h3>Professional</h3>
+                  <div class="price-amount">$49<span>/mo</span></div>
+                  <ul class="price-features">
+                    <li>5 Chatbot Agents</li>
+                    <li>10,000 Chats / mo</li>
+                    <li>Advanced Customization</li>
+                    <li>Priority Email Support</li>
+                  </ul>
+                  <button class="btn-primary" style="width: 100%;" onclick="triggerChatbotQuery('Tell me more about the Professional plan')">Select Plan</button>
+                </div>
+              </div>
+
+              <!-- Footer -->
+              <footer class="site-footer" id="site-footer-text">
+                <p>&copy; 2026 SaaSify Inc. All rights reserved.</p>
+              </footer>
+
+            </div>
+
+            <!-- CHATBOT TARGET WIDGET CONTAINER -->
+            <div id="chatbot-preview-mount"></div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- JS Modules -->
+  <script src="chatbot-engine.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

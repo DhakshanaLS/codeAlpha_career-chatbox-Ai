@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerBot AI — Your Intelligent Career Guide</title>
+  <meta name="description" content="AI-powered career guidance chatbot. Get career suggestions, resume tips, interview prep, and job search advice instantly.">
+  <link rel="stylesheet" href="career.css">
+</head>
+<body class="theme-career">
+
+  <!-- Background animated orbs -->
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+  </div>
+
+  <div class="chatbox-app-container">
+
+    <!-- ===== LEFT SIDEBAR ===== -->
+    <aside class="chat-sidebar" id="left-sidebar">
+      <div class="sidebar-header">
+        <div class="brand-title">
+          <div class="brand-logo">
+            <span class="brand-logo-emoji">🚀</span>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">CareerBot</span>
+            <span class="brand-tagline">AI</span>
+          </div>
+        </div>
+        <button class="btn-new-chat" id="btn-new-chat" title="New Conversation">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Chat
+        </button>
+      </div>
+
+      <!-- Feature Quick-Picks -->
+      <div class="sidebar-feature-pills">
+        <div class="feature-pill active" data-topic="career" onclick="setTopic('career')">
+          <span>🎯</span> Career Path
+        </div>
+        <div class="feature-pill" data-topic="resume" onclick="setTopic('resume')">
+          <span>📄</span> Resume Tips
+        </div>
+        <div class="feature-pill" data-topic="interview" onclick="setTopic('interview')">
+          <span>🎤</span> Interview Prep
+        </div>
+        <div class="feature-pill" data-topic="jobs" onclick="setTopic('jobs')">
+          <span>💼</span> Job Search
+        </div>
+        <div class="feature-pill" data-topic="salary" onclick="setTopic('salary')">
+          <span>💰</span> Salary Guide
+        </div>
+        <div class="feature-pill" data-topic="skills" onclick="setTopic('skills')">
+          <span>🛠️</span> Skills & Courses
+        </div>
+      </div>
+
+      <!-- Recent Conversations -->
+      <div class="sidebar-conversations">
+        <div class="section-label">
+          <span>💬 Recent Sessions</span>
+        </div>
+        <div id="recent-conversations-list">
+          <div class="no-history-msg">No saved history yet.<br>Start chatting to begin!</div>
+        </div>
+      </div>
+
+      <!-- Stats Footer -->
+      <div class="sidebar-footer">
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-num" id="stat-chats">0</div>
+            <div class="stat-label">Chats</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="stat-tips">50+</div>
+            <div class="stat-label">Tips</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="stat-topics">6</div>
+            <div class="stat-label">Topics</div>
+          </div>
+        </div>
+        <div class="footer-setting-row">
+          <label for="theme-select">Visual Theme</label>
+          <select id="theme-select">
+            <option value="career">🌈 Career Rainbow</option>
+            <option value="ocean">🌊 Ocean Deep</option>
+            <option value="sunset">🌅 Sunset Glow</option>
+            <option value="forest">🌿 Forest Fresh</option>
+          </select>
+        </div>
+        <a href="studio.html" class="btn-studio-link">⚙️ Admin Studio</a>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN CHAT AREA ===== -->
+    <main class="main-chat-wrapper">
+
+      <!-- Chat Header -->
+      <header class="chat-header">
+        <!-- Mobile sidebar toggle -->
+        <button class="btn-menu-toggle" id="btn-sidebar-toggle" title="Toggle Menu" aria-label="Toggle Sidebar">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+
+        <div class="chat-header-info">
+          <div class="header-avatar-circle" id="header-bot-avatar">🤖</div>
+          <div class="header-meta">
+            <div class="header-title-text">
+              <span id="header-bot-name">CareerBot</span>
+              <span class="header-active-badge" id="header-active-domain">Career Guide</span>
+            </div>
+            <div class="header-status-badge" id="sync-status-badge">
+              <span class="header-status-dot"></span>
+              <span id="status-text">Online & Ready</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-control-buttons">
+          <button class="btn-circle-action" id="btn-toggle-mute" title="Toggle Sound">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </button>
+          <button class="btn-circle-action" id="btn-clear-chat" title="Clear Chat">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          </button>
+          <button class="btn-circle-action" id="btn-toggle-settings" title="Toggle Settings">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.52a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Welcome Banner (shown at start) -->
+      <div class="welcome-banner" id="welcome-banner">
+        <div class="welcome-content">
+          <div class="welcome-emoji">🚀</div>
+          <h1 class="welcome-heading">Welcome to <span class="gradient-text">CareerBot AI</span></h1>
+          <p class="welcome-sub">Your personal AI-powered career advisor. Ask me anything about careers, resumes, interviews, or job searching!</p>
+          <div class="welcome-topic-cards">
+            <div class="topic-card" onclick="sendQuickMessage('What career should I choose based on my interests?')">
+              <div class="topic-icon">🎯</div>
+              <div class="topic-label">Career Paths</div>
+            </div>
+            <div class="topic-card" onclick="sendQuickMessage('How do I write a strong resume?')">
+              <div class="topic-icon">📄</div>
+              <div class="topic-label">Resume Tips</div>
+            </div>
+            <div class="topic-card" onclick="sendQuickMessage('How should I prepare for a job interview?')">
+              <div class="topic-icon">🎤</div>
+              <div class="topic-label">Interview Prep</div>
+            </div>
+            <div class="topic-card" onclick="sendQuickMessage('How do I find and apply for jobs effectively?')">
+              <div class="topic-icon">💼</div>
+              <div class="topic-label">Job Search</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Message History -->
+      <div class="chat-messages-container" id="chat-messages-body">
+        <!-- Populated dynamically -->
+      </div>
+
+      <!-- Typing Indicator -->
+      <div class="typing-indicator-box" id="chat-typing-indicator" style="display:none;">
+        <div class="typing-avatar">🤖</div>
+        <div class="typing-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="typing-label">CareerBot is thinking...</div>
+      </div>
+
+      <!-- Suggestion Chips -->
+      <div class="chat-suggestions-wrapper" id="chat-suggestions-chips">
+        <!-- Populated dynamically -->
+      </div>
+
+      <!-- Input Bar -->
+      <div class="chat-input-wrapper">
+        <form class="input-container-form" id="chat-input-form">
+          <div class="input-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <input
+            type="text"
+            id="chat-message-input"
+            placeholder="Ask about careers, resumes, interviews, jobs..."
+            autocomplete="off"
+            aria-label="Chat input"
+          />
+          <button type="button" class="mic-btn-input" id="chat-mic-button" aria-label="Voice Input">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </button>
+          <button type="submit" class="send-btn-input" aria-label="Send">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </form>
+      </div>
+
+    </main>
+
+    <!-- ===== RIGHT PANEL ===== -->
+    <aside class="debug-panel collapsed" id="right-debug-drawer">
+      <div class="debug-header">
+        <h3>⚙️ Settings & Tools</h3>
+        <button class="btn-close-panel" id="btn-close-panel" onclick="document.getElementById('right-debug-drawer').classList.add('collapsed')">✕</button>
+      </div>
+
+      <div class="debug-content">
+
+        <!-- Career Profile -->
+        <div class="debug-section">
+          <div class="debug-section-title">👤 Your Career Profile</div>
+          <div class="debug-form-group">
+            <label for="user-experience">Experience Level</label>
+            <select id="user-experience">
+              <option value="student">🎓 Student / Fresher</option>
+              <option value="entry">🌱 Entry Level (0–2 yrs)</option>
+              <option value="mid">📈 Mid Level (3–5 yrs)</option>
+              <option value="senior">⭐ Senior (5+ yrs)</option>
+            </select>
+          </div>
+          <div class="debug-form-group">
+            <label for="user-field">Field of Interest</label>
+            <select id="user-field">
+              <option value="tech">💻 Technology / IT</option>
+              <option value="business">📊 Business / Finance</option>
+              <option value="creative">🎨 Creative / Design</option>
+              <option value="healthcare">🏥 Healthcare</option>
+              <option value="education">📚 Education</option>
+              <option value="other">🌐 Other</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Custom Intent Trainer -->
+        <div class="debug-section">
+          <div class="debug-section-title">🧠 Train Custom Answers</div>
+          <div class="debug-form-group">
+            <label for="intent-name">Intent Name</label>
+            <input type="text" id="intent-name" placeholder="e.g. Python Career Path" />
+          </div>
+          <div class="debug-form-group">
+            <label for="intent-triggers">Trigger Phrases (comma-separated)</label>
+            <textarea id="intent-triggers" rows="2" placeholder="e.g. python, learn python, python job"></textarea>
+          </div>
+          <div class="debug-form-group">
+            <label for="intent-response">Bot Response</label>
+            <textarea id="intent-response" rows="3" placeholder="Python is great for..."></textarea>
+          </div>
+          <button type="button" class="btn-small-glow" id="btn-train-intent">💾 Save Intent</button>
+        </div>
+
+        <!-- Debug Log -->
+        <div class="debug-section">
+          <div class="debug-section-title">📋 Classifier Log</div>
+          <div class="nlp-log-box" id="nlp-debug-log-box">
+            <div style="color:#6b7280;">Send a message to see NLP scoring here...</div>
+          </div>
+        </div>
+
+        <!-- Lead Capture -->
+        <div class="debug-section">
+          <div class="debug-section-title">📬 Lead Capture</div>
+          <div class="debug-form-group" style="display:flex;align-items:center;justify-content:space-between;">
+            <label for="lead-toggle" style="margin-bottom:0;cursor:pointer;">Enable capture prompt</label>
+            <input type="checkbox" id="lead-toggle" style="width:16px;height:16px;cursor:pointer;" checked />
+          </div>
+          <div class="debug-form-group" style="margin-top:8px;">
+            <label for="lead-trigger-input">Prompt after N messages</label>
+            <input type="number" id="lead-trigger-input" min="1" max="10" value="3" />
+          </div>
+          <div class="captured-leads-list" id="captured-session-leads">
+            <div style="color:var(--text-muted);font-size:0.7rem;text-align:center;padding-top:8px;">No leads yet</div>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+  </div>
+
+  <script src="career.js"></script>
+</body>
+</html>
